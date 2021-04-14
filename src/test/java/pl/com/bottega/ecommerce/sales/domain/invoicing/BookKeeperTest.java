@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
+import pl.com.bottega.ecommerce.sales.domain.productscatalog.ProductData;
 
 import java.lang.reflect.InvocationHandler;
 
@@ -29,16 +30,20 @@ class BookKeeperTest {
         keeper = new BookKeeper(factory);
     }
 
+    ProductData
+
     @Test
     void test() {
         Id sampleId = Id.generate();
         ClientData dummy = new ClientData(sampleId, SAMPLE_CLIENT_NAME);
         InvoiceRequest request = new InvoiceRequest(dummy);
+
         Invoice invoice = new Invoice(Id.generate(), dummy);
         when(factory.create(dummy)).thenReturn(invoice);
 
 
         Invoice issuance =  keeper.issuance(request, taxPolicy);
+
         assertTrue(nonNull(issuance));
         assertEquals(invoice, issuance);
 
